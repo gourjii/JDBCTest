@@ -20,17 +20,10 @@ import objects.Profession;
 
 public class App {
 	public static void main (String args[]) throws SQLException{
-		//
+		
 		Jdbc jdbc = new Jdbc();
 		jdbc.recreateTables();
-		/*
-		Human h = new Human(4,"Dick", 2);
-		DaoHumanImpl d = new DaoHumanImpl();  
-		d.remove(h);
-		d.add(h);
-		h.setName("Dickey");
-		d.update(h);
-		*/
+		
 		DaoProfessionImpl dp = new DaoProfessionImpl();
 		DaoHumanImpl dh = new DaoHumanImpl();
 		
@@ -42,7 +35,11 @@ public class App {
 		dh.add(new Human(2,"Dick", p2));
 		dh.add(new Human(3,"Mick", p2));
 		
-		jdbc.select();
+		jdbc.selectAll();
 		jdbc.conn.close();
+		
+		System.out.println("------Find all/by name:------");
+		dp.findAll().forEach(s -> System.out.println(s.getName()));
+		System.out.println(dp.findByName("Java guru").getId());
 	}
 }

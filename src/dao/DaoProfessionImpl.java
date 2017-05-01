@@ -1,5 +1,7 @@
 package dao;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jdbc.Jdbc;
@@ -40,11 +42,24 @@ public class DaoProfessionImpl implements DaoProfession{
 		return true;
     }
 	
-    public List<Profession> findAll(){
-    	return null;
+    public List<Profession> findAll() throws SQLException{
+    	Jdbc jdbc = new Jdbc();
+    	String q = "SELECT Id, Name FROM Professions";
+    	List<Profession> profList = new ArrayList<>();
+    	ResultSet rs = jdbc.stmt.executeQuery(q);
+		while(rs.next()){
+			profList.add(
+				new Profession(rs.getInt("Id"), 
+					rs.getString("Name")));
+			}
+		return profList;
     }
     
-    public Profession findByName(String name){
-    	return null;
+    public Profession findByName(String name) throws SQLException{
+    	Jdbc jdbc = new Jdbc();
+    	String q = "SELECT Id, Name FROM Professions WHERE Name='"+ name + "'";
+    	ResultSet rs = jdbc.stmt.executeQuery(q);
+    	rs.next(); //returning only first value 
+    	return new Profession(rs.getInt("Id"), rs.getString("Name"));
     }
 }

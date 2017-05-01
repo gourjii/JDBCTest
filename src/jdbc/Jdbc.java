@@ -16,13 +16,15 @@ public class Jdbc {
 	this.stmt = this.conn.createStatement();
 	}
 
-	public void select () throws SQLException{
+	public void selectAll () throws SQLException{
+		System.out.println("------Humans:------");
 		ResultSet rs = this.stmt.executeQuery("SELECT * FROM Humans");
 		while(rs.next()){
 			System.out.println(rs.getObject(1) + ": " 
 				+ rs.getObject(2) + ": " 
 				+ rs.getObject(3));
 			}
+		System.out.println("------Professions:------");
 		rs = this.stmt.executeQuery("SELECT * FROM Professions");
 		while(rs.next()){
 			System.out.println(rs.getObject(1) + ": " 
